@@ -3,10 +3,12 @@
 
 //import login page field
 import { LoginPage } from "../pages/LoginPage";
+//import historicPage identifiers
+import {HistoricPage} from "../pages/HistoricPage"
 
 //import page identifiers
 const loginPage = new LoginPage 
-
+const historicPage = new HistoricPage
 let loginData = null;
 let test_filePath = "loginData.json"
 
