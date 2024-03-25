@@ -9,14 +9,15 @@ import {HistoricPage} from "../pages/HistoricPage"
 const loginPage = new LoginPage 
 const historicPage = new HistoricPage
 
-let loginData = null;
-let test_filePath = "loginData.json"
+let testdata= null;
+let test_filePath = "testdata.json"
+
 
 describe("connection to the cypress BOM2.0 page", () => {
     before(() => {
         cy.readJsonFile(test_filePath).then((data) => {
-            loginData=data
-            hitoricData=data
+            testdata=data
+           
         })
       })
 
@@ -24,27 +25,41 @@ describe("connection to the cypress BOM2.0 page", () => {
     beforeEach(() => {
 //Visit the login page
         cy.visit("https://adminbom.smobilpay.integration.maviance.info/")
-        cy.get(loginPage.user_name_field).type(loginData.login_page.user_name_login)
-        cy.get(loginPage.password_field ).type(loginData.login_page.password_login)
+        cy.get(loginPage.user_name_field).type(testdata.login_page.user_name_login)
+        cy.get(loginPage.password_field ).type(testdata.login_page.password_login)
         cy.get(loginPage.button_login_field).click()
         cy.get(historicPage.click_historic_field).click()
  
     })
 // access the different elements of the historic page   
   it ("the elements contained in the table of the historic page", () =>{   
-         cy.contains(historicPage.click_service_ident,hitoricData.historic_page.click_service_th).click()
-         cy.contains(historicPage.destination_ident,hitoricDatahistoric_page.destination_th).as("destination")
-         cy.contains(historicPage.click_collected_amount_ident,hitoricData.historic_page.click_collected_amount_th).click()
-         cy.contains(historicPage.click_paid_at_ident,hitoricData.historic_page.click_paid_at_th).click()
-         cy.contains (historicPage.ptn_on_table_ident,hitoricData.historic_page.ptn_th)
-         cy.contains(historicPage.click_processed_at_ident ,click_processed_at_th).click()
-         cy.contains(historicPage.click_payment_status_ident,hitoricData.historic_page.click_payment_Status).click()
-         cy.contains(historicPage.actions_ident,hitoricData.historic_page.actions_th)
-         cy.get(historicPage.rows_per_page_ident,hitoricData.historic_page.rows_per_page).click()
-         cy.wait(400)
-         cy.get(historicPage.select_rows_per_page_ident).click()
-         cy.contains(historicPage.click_pagination_1_ident,hitoricData.historic_page.click_pagination_1).click()
+         cy.contains(testdata.historic_page.click_service_th).click().as("service")
+         cy.contains(testdata.historic_page.destination_th).as("Destination")
+         cy.contains(testdata.historic_page.click_collected_amount_th).click()
+         cy.contains(testdata.historic_page.click_paid_at_th).click()
+         cy.contains(testdata.historic_page.ptn_th)
+         cy.contains(testdata.historic_page.click_processed_at_th).click()
+         cy.contains(testdata.historic_page.click_payment_Status).click()
+         cy.contains(testdata.historic_page.actions_th).as("action")
+         cy.contains(testdata.historic_page.rows_per_page_).click()
+   // Define a function to click the button until it becomes inactive
+const clickButtonUntilInactive = () => {
+    cy.get(historicPage.pagination_next_button_identifier).then($button => {
+        if ($button.prop('disabled')) {
+            // If button is inactive, stop clicking
+            return;
+        } else {
+            // If button is active, click it and recursively call this function
+            cy.get(historicPage.pagination_next_button_identifier).click();
+            cy.wait(1000); // Optional: Wait for a certain time before clicking again
+            clickButtonUntilInactive(); // Recursive call
+        }
+    });
+};
 
-   
+// Start clicking pagination buttons
+clickButtonUntilInactive(); // Recursive call
+
+
      })
 })

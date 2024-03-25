@@ -1,0 +1,28 @@
+{
+"login_page":{
+    "user_name_login": "auto_webagent",
+    "password_login":"Smobil@2023",
+   "historic_field_menubar": "History"
+
+  },
+  
+  "home_page":{
+    "welcome_text1":"WELCOME TO YOUR",
+    "digital_payment_text2": "DIGITAL PAYMENT",
+    "platform_text3": "PLATFORM",
+    "bulk_payment_text4":"Bulk Payment"
+  },
+  "historic_page":{
+    "click_service_th":"Service",
+    "destination_th":"Destination",
+    "click_collected_amount_th":"Collected Amount",
+    "click_paid_at_th":"Paid At",
+    "ptn_th": "ptn",
+    "click_processed_at_th":"Processed At",
+    "click_payment_Status":"Payment Status",
+    "actions_th":"Actions",
+    "rows_per_page_":"Rows per page",
+   "next_button_identifier":"button"
+  }
+ 
+}
